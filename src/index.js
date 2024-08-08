@@ -1,19 +1,18 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const app = express();
-const route = require("./route/route");
+const express= require("express")
+const mongoose= require("mongoose")
+require("dotenv").config()
 
-
-app.use(express.json());
-
-mongoose.connect("mongodb+srv://RameshwarJay:RUlNC8QtlA8A91jX@rameshwarnavathar.dujri1m.mongodb.net/")
-.then(() => {console.log("Connect Database successfully")})
-.catch((errors) => {console.log(errors.message)})
+const route= require("./route/route")
+const app =express();
+const PORT =process.env.PORT ||4000
 
 
 
-app.use("/", route);
+mongoose.connect(process.env.MONGODB_URL)
+.then(()=>console.log('Data base is connected!!'))
+.catch((err)=>console.log(err))
 
-app.listen(4000, function () {
-  console.log("express running on PORT "+ 3000)
-})
+
+app.use('/',route)
+
+app.listen(PORT ,()=>console.log(`Server is start on http://localhost:${PORT}`))
